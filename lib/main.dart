@@ -20,7 +20,7 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
       ),
       debugShowCheckedModeBanner: false,
-      initialRoute: "/spashscreen",
+      initialRoute: "/home",
       routes: {
         "/spashscreen": (context) => const SplashScreen(),
         "/home": (context) => const HomeScreen(),

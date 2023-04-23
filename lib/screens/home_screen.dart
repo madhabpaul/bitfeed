@@ -27,7 +27,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
 
   Future<void> fetchData() async {
     final response =
-        await http.get(Uri.parse('http://64.227.170.215/action.php'));
+        await http.get(Uri.parse('http://64.227.170.215/bitfeed/getapi.php'));
     if (response.statusCode == 200) {
       List<dynamic> data = jsonDecode(response.body);
       _streamController.add(data);
@@ -60,11 +60,20 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
               builder: (context, snapshot) {
                 if (snapshot.hasData) {
                   return ListView.builder(
+                    padding: const EdgeInsets.all(8),
                     itemCount: snapshot.data!.length,
                     itemBuilder: (context, index) {
-                      return ListTile(
-                        title: Text(snapshot.data![index]['title']),
-                        subtitle: Text(snapshot.data![index]['description']),
+                      return Card(
+                        child: ListTile(
+                          title: Text(
+                            snapshot.data![index]['title'],
+                            textAlign: TextAlign.justify,
+                          ),
+                          subtitle: Text(
+                            snapshot.data![index]['description'],
+                            textAlign: TextAlign.justify,
+                          ),
+                        ),
                       );
                     },
                   );
@@ -75,12 +84,6 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                 }
               },
             ),
-          ),
-          floatingActionButton: FloatingActionButton(
-            onPressed: () {
-              //updateData();
-            },
-            child: const Icon(Icons.refresh),
           ),
         ));
   }

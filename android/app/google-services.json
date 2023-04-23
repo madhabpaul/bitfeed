@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "991563328658",
+    "project_id": "bitfeed777",
+    "storage_bucket": "bitfeed777.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:991563328658:android:b7063603ecfa579c3dca4b",
+        "android_client_info": {
+          "package_name": "com.example.bitfeed"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "991563328658-s8vfml0qe28gh7lob5kk5m2786vi9700.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDbCP9VmQFbQ3aaU1OguZGlniJTUcQGAPo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "991563328658-s8vfml0qe28gh7lob5kk5m2786vi9700.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
