@@ -1,6 +1,8 @@
 import 'dart:async';
 import 'dart:convert';
 
+import 'package:bitfeed/local_services.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 // ignore: import_of_legacy_library_into_null_safe
 import 'package:http/http.dart' as http;
@@ -9,22 +11,46 @@ class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
 
   @override
-  _HomeScreenState createState() => _HomeScreenState();
+  HomeScreenState createState() => HomeScreenState();
 }
 
-class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
+class HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
   late StreamController<List<dynamic>> _streamController;
   late Timer _timer;
 
   @override
   void initState() {
     super.initState();
+
+    //Timer for fetching data from API  for realtime update
     _streamController = StreamController<List<dynamic>>();
     _timer = Timer.periodic(const Duration(seconds: 1), (_) {
       fetchData();
     });
+
+    // Firebase Local Notification Settings
+    FirebaseMessaging.instance.getInitialMessage().then((message) {
+      if (message != null) {
+        Navigator.pushNamed(context, "/home");
+      }
+    });
+
+    //when app is in foreground state
+    FirebaseMessaging.onMessage.listen((message) {
+      if (message.notification != null) {
+        LocalNotificationServices.createNotification(message);
+      }
+    });
+
+    //when app is in background and terminated state
+    FirebaseMessaging.onMessageOpenedApp.listen((message) {
+      if (message.notification != null) {
+        LocalNotificationServices.createNotification(message);
+      }
+    });
   }
 
+  //Fetching data from API and decoding JSON data
   Future<void> fetchData() async {
     final response =
         await http.get(Uri.parse('http://64.227.170.215/bitfeed/getapi.php'));
