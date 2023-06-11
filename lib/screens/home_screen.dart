@@ -4,8 +4,10 @@ import 'dart:convert';
 import 'package:bitfeed/local_services.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
+//import 'package:google_fonts/google_fonts.dart';
 // ignore: import_of_legacy_library_into_null_safe
 import 'package:http/http.dart' as http;
+import 'package:bitfeed/constants/global_constants.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -78,7 +80,23 @@ class HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
         ),
         home: Scaffold(
           appBar: AppBar(
-            title: const Text('BitFeed'),
+            leading: const Center(
+                child: Padding(
+              padding: EdgeInsets.all(5.0),
+              child: CircleAvatar(
+                radius: 30,
+                backgroundColor: Colors.teal,
+                child: CircleAvatar(
+                  backgroundImage: AssetImage(logo),
+                  radius: 28,
+                ),
+              ),
+            )),
+            title: const Text(
+              'BitFeed',
+              style: TextStyle(fontWeight: FontWeight.bold),
+            ),
+            centerTitle: true,
           ),
           body: Center(
             child: StreamBuilder<List<dynamic>>(
@@ -90,15 +108,19 @@ class HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                     itemCount: snapshot.data!.length,
                     itemBuilder: (context, index) {
                       return Card(
-                        child: ListTile(
+                        child: ExpansionTile(
                           title: Text(
                             snapshot.data![index]['title'],
-                            textAlign: TextAlign.justify,
+                            style: const TextStyle(fontWeight: FontWeight.bold),
                           ),
-                          subtitle: Text(
-                            snapshot.data![index]['description'],
-                            textAlign: TextAlign.justify,
-                          ),
+                          children: <Widget>[
+                            ListTile(
+                              title: Text(
+                                snapshot.data![index]['description'],
+                                textAlign: TextAlign.justify,
+                              ),
+                            ),
+                          ],
                         ),
                       );
                     },
